@@ -21,8 +21,10 @@ class ProductManager:
     def __init__(self):
         self.products = [] 
         
+    
     def add_product(self, product):
         self.products.append(product)
+        
         
     def get_product(self, upc):
         for product in self.products:
@@ -30,12 +32,14 @@ class ProductManager:
                 return product
         return None
     
+    
     def remove_product(self, upc):
         for product in self.products:
             if product.upc == upc:
                 self.products.remove(product)
                 return True
         return False
+        
         
     def update_product(self, upc, product):
         for i, product in enumerate(self.products):
