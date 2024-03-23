@@ -29,6 +29,9 @@ class ShoppingPathfinder(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    myProductManager = ProductManager()
+    myProductManager.initializeProducts()
+
     widget = TileMap(40, 25)
     widget.set_tile(5, 5, 'floor_wood')
     widget.place_object(2, 2, 'shelf_white_single_0')

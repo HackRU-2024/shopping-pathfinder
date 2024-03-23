@@ -1,3 +1,6 @@
+from api import API
+
+
 class Product:
     def __init__(self,
                  upc,
@@ -19,7 +22,25 @@ class Product:
         
 class ProductManager:
     def __init__(self):
+        print("check...")
         self.products = [] 
+
+    def initializeProducts(self):
+        print("starting...")
+
+        #get list of items
+        myAPI = API()
+        items = myAPI.getItemDetails()
+        print("got the API STUFF")
+        self.products = items
+
+        # Open a file in write mode ('w')
+        with open('output.txt', 'w') as file:
+            # Iterate over each element in the list
+            for item in self.products:
+                # Write each element followed by a newline character to the file
+                file.write(str(item) + '\n')
+
         
     def add_product(self, product):
         self.products.append(product)
