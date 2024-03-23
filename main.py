@@ -1,5 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton
+from PyQt6.QtGui import QPainter
 from tilemap import TileMap
 from product import Product
 
@@ -7,8 +8,7 @@ class ShoppingPathfinder(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.tilemap = TileMap(20, 20, 32)
-        
+    
     
     def initUI(self):
         self.setWindowTitle('Shopping Pathfinder')
@@ -21,9 +21,15 @@ class ShoppingPathfinder(QWidget):
         button.move(50, 100)
         
         self.show()
+        
+        
+    def paintEvent(self, event):
+        self.tilemap.draw()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ShoppingPathfinder()
+    widget = TileMap(10, 10, 32)
+    widget.show()
     sys.exit(app.exec())
     
