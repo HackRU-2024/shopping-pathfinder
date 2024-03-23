@@ -29,7 +29,7 @@ class ShoppingPathfinder(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    widget = TileMap(10, 10, 32)
+    widget = TileMap(40, 25, 32)
     widget.show()
     sys.exit(app.exec())
     
