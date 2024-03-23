@@ -1,3 +1,6 @@
+from api import API
+
+
 class Product:
     def __init__(self,
                  upc,
@@ -19,7 +22,22 @@ class Product:
         
 class ProductManager:
     def __init__(self):
+        print("check...")
         self.products = [] 
+
+    def initializeProducts(self):
+        print("starting...")
+
+        #get list of items
+        myAPI = API()
+        items = myAPI.getItemDetails()
+        print("got the API STUFF")
+        self.products = items
+
+        #sort list by departments
+        self.products = sorted(self.products, key=lambda x: x["Department"])
+
+
         
     
     def add_product(self, product):

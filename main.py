@@ -30,9 +30,8 @@ class ShoppingPathfinder(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    # tilemap = TileMap(20, 20)
-    # default_store_gen(tilemap)
-    # tilemap.show()
+    myProductManager = ProductManager()
+    myProductManager.initializeProducts()
     view = TileMapView()
     view.show()    
     sys.exit(app.exec())
