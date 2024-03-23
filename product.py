@@ -34,12 +34,9 @@ class ProductManager:
         print("got the API STUFF")
         self.products = items
 
-        # Open a file in write mode ('w')
-        with open('output.txt', 'w') as file:
-            # Iterate over each element in the list
-            for item in self.products:
-                # Write each element followed by a newline character to the file
-                file.write(str(item) + '\n')
+        #sort list by departments
+        self.products = sorted(self.products, key=lambda x: x["Department"])
+
 
         
     def add_product(self, product):
