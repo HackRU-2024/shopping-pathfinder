@@ -2,7 +2,7 @@ import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton
 from PyQt6.QtGui import QPainter
 from tilemap import TileMap
-from product import Product
+from product import Product, ProductManager
 
 class ShoppingPathfinder(QWidget):
     def __init__(self):
