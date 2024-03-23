@@ -22,6 +22,7 @@ To use this project, follow these steps:
 
     ```
     git clone https://github.com/HackRU-2024/shopping-pathfinder.git
+    python -m venv venv # recommended to make a virtual env
     ```
 
 2. Install dependencies:
