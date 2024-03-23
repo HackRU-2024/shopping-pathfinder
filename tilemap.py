@@ -1,4 +1,3 @@
-import pygame
 
 class TileMap:
     def __init__(self, width, height, tile_size):
