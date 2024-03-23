@@ -33,9 +33,10 @@ if __name__ == '__main__':
     widget.set_tile(5, 5, 'floor_wood')
     widget.place_object(2, 2, 'shelf_white_single_0')
     widget.place_object(3, 3, 'shelf_white_single_1')
+    widget.place_object(3, 4, 'shelf_white_single_1')
     widget.place_object(4, 4, 'shelf_white_double')
     widget.place_object(6, 4, 'shelf_white_double')
-    widget.place_object(5, 3, 'shelf_white_double')
+    # widget.place_object(5, 3, 'shelf_white_double')
     widget.show()
     sys.exit(app.exec())
     

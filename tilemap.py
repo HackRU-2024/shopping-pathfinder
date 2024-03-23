@@ -15,20 +15,28 @@ obj_mappings = {
 }
 
 
+class Tile:
+    def __init__(self, tile_type: str, traversable: bool):
+        self.type = tile_type
+        self.traversable = traversable
+        self.products = []
+
+
 class TileMap(QWidget):
     def __init__(self, width, height):
         super().__init__()
         self.width = width
         self.height = height
         self.tile_size = 32
-        self.tiles = [['floor_concrete' for _ in range(width)] for _ in range(height)]
+        self.tiles = [[Tile('floor_concrete', True) for _ in range(width)] for _ in range(height)]
         self.objects = []
         self.texture_atlas = QPixmap('assets/modern_tiles/interiors_free/32x32/Interiors_free_32x32.png')
 
 
     def get_tile_texture(self, tile_type: str):
         return self.texture_atlas.copy(tile_mappings[tile_type])
-    
+
+
     def get_obj_texture_size(self, obj_type: str):
         '''Return the texture and the offset of the object texture.'''
         texture, offset = obj_mappings[obj_type]
@@ -40,21 +48,19 @@ class TileMap(QWidget):
         # Paint tiles
         for y in range(self.height):
             for x in range(self.width):
-                tile_type = self.tiles[y][x]
+                tile_type = self.tiles[y][x].type
                 texture = self.get_tile_texture(tile_type)
                 painter.drawPixmap(x * self.tile_size, y * self.tile_size, texture)
-                
+
         # Paint objects
         for object in self.objects:
             x, y, obj_type = object
-            print(x, y, obj_type)
             texture, offset = self.get_obj_texture_size(obj_type)
-            print(texture, offset)
             painter.drawPixmap(x * self.tile_size + offset[0], y * self.tile_size + offset[1], texture)
 
 
     def set_tile(self, x, y, tile):
-        self.tiles[y][x] = tile
+        self.tiles[y][x].type = tile
 
 
     def get_tile(self, x, y):
@@ -63,3 +69,6 @@ class TileMap(QWidget):
 
     def place_object(self, x, y, obj_type):
         self.objects.append((x, y, obj_type))
+        
+    def add_product(self, x, y, product):
+        self.tiles[y][x].products.append(product)
