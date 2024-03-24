@@ -1,8 +1,8 @@
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
                              QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, 
-                             QHBoxLayout, QGraphicsScene, QGraphicsView, QtWi)
+                             QHBoxLayout, QGraphicsScene, QGraphicsView, QMainWindow)
 from PyQt6.QtCore import Qt
-from PyQt6 import QtCore
+from PyQt6 import QtCore, QtGui, QtWidgets
 from tilemapview import TileMapView
 from product import ProductManager
 from pathfinder import Pathfinder
@@ -16,7 +16,7 @@ product_list = []
 myProductManager = ProductManager()
 myProductManager.initializeProducts()
 
-class MainWindow(QWidget):
+class MainWindow(QWidget,):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Demo')
@@ -44,8 +44,8 @@ class MainWindow(QWidget):
         self.view = QGraphicsView()
         self.view.setScene(self.scene)
         self.view.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
-        self.view.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
-        self.setCentralWidget(self.view)
+        # self.view.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+        self.central_widget(self.view)
         self.zoom_factor = 1.0
 
         
