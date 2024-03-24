@@ -2,7 +2,6 @@ from PyQt6.QtWidgets import QWidget
 from PyQt6.QtGui import QPainter, QColor, QPixmap, QPen
 from PyQt6.QtCore import Qt, QRect
 
-
 tile_mappings = {
     'floor_concrete' : QRect(192, 928, 32, 32),
     'floor_wood' : QRect(0, 1056, 32, 32),
@@ -59,7 +58,6 @@ class TileMap(QWidget):
         pen.setStyle(Qt.PenStyle.SolidLine)
         painter.setPen(pen)
         if len(self.path) > 1:
-            print('drawing')
             for i in range(len(self.path) - 1):
                 x, y = self.path[i]
                 next_x, next_y = self.path[i+1]
@@ -79,9 +77,9 @@ class TileMap(QWidget):
                                y * self.tile_size + offset[1], texture)
 
 
-    def set_path(self, path):
-        self.path = path
-
+    def add_path(self, path):
+        for node in path:
+            self.path.append(tuple(node))
 
     def set_tile(self, x, y, tile):
         self.tiles[y][x].type = tile

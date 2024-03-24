@@ -55,7 +55,11 @@ class ProductManager:
         i = 0
         for item in self.products:
             if(shelfCapacity != 2 and i != len(shelves)):
-                item['Location'] = shelves[i][:2]
+                # Adding access point offset to the shelf position so item is accessed from the front
+                access_point_offset = 1
+                shelve_pos = list(shelves[i][:2])
+                shelve_pos[1] += access_point_offset
+                item['Location'] = shelve_pos
                 shelfCapacity += 1
             elif(i == len(shelves)):
                 print("ran out of shelves...")
@@ -73,9 +77,9 @@ class ProductManager:
         self.products.append(product)
         
         
-    def get_product(self, upc):
+    def get_product(self, description):
         for product in self.products:
-            if product.upc == upc:
+            if product['Description'] == description:
                 return product
         return None
     
