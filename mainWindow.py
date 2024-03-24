@@ -37,12 +37,13 @@ class MainWindow(QWidget):
         
         # Create QGraphicsScene
         self.scene = QGraphicsScene()
-        self.scene.setSceneRect(0, 0, 5000, 5000)
+        self.scene.setSceneRect(0, 0, 500, 500)
 
         # Create QGraphicsView
         self.view = QGraphicsView()
         self.view.setScene(self.scene)
         self.view.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
+        self.view.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
         self.zoom_factor = 1.0
 
         
