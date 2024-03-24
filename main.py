@@ -3,8 +3,9 @@ from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton
 from PyQt6.QtGui import QPainter
 from tilemap import TileMap
 from product import Product, ProductManager
-from views.tilemapview import TileMapView
+#from views.tilemapview import TileMapView
 from pathfinder import Pathfinder
+from views.mainWindow import MainWindow
 
 
 if __name__ == '__main__':
@@ -14,19 +15,15 @@ if __name__ == '__main__':
     myProductManager = ProductManager()
     myProductManager.initializeProducts()
     
-    # Create the tilemap view
-    view = TileMapView()
-    myProductManager.populateShelves(view)
-    myProductManager
-    # Pathfinding
-    pathfinder = Pathfinder(view.tilemaps_widget)
-    pathfinder.add_node((29, 24)) # Start
-    pathfinder.add_node(myProductManager.get_product('sesame seeds')['Location'])
-    pathfinder.add_node(myProductManager.get_product('vinegar')['Location'])
-    pathfinder.add_node(myProductManager.get_product('hot sauce')['Location'])
-    pathfinder.add_node((2, 2))
-    path = pathfinder.find_path()
-    view.tilemaps_widget.add_path(path)
+    # Startup Main view
+    view = MainWindow()
+
+    # myProductManager.populateShelves(view)
+    # # Pathfinding
+    # pathfinder = Pathfinder(view.tilemaps_widget)
+    # path = pathfinder.find_path((0, 0), (19, 19))
+    # path = [tuple(i) for i in path]
+    # view.tilemaps_widget.set_path(path)
 
     view.show()    
     sys.exit(app.exec())
