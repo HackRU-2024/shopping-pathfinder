@@ -3,7 +3,7 @@ from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QPushButton
 from PyQt6.QtGui import QPainter
 from tilemap import TileMap
 from product import Product, ProductManager
-#from views.tilemapview import TileMapView
+from tilemapview import TileMapView
 from pathfinder import Pathfinder
 from mainWindow import MainWindow
 
@@ -16,7 +16,7 @@ if __name__ == '__main__':
     #myProductManager.initializeProducts()
         
     # Startup Main view
-    view = MainWindow()
+    view = TileMapView()
 
     # myProductManager.populateShelves(view)
     # # Pathfinding
