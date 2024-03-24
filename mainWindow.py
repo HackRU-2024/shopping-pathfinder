@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
-                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout, QGraphicsScene, QGraphicsView)
+                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, 
+                             QHBoxLayout, QGraphicsScene, QGraphicsView, QtWi)
 from PyQt6.QtCore import Qt
 from PyQt6 import QtCore
 from tilemapview import TileMapView
@@ -44,6 +45,7 @@ class MainWindow(QWidget):
         self.view.setScene(self.scene)
         self.view.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
         self.view.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+        self.setCentralWidget(self.view)
         self.zoom_factor = 1.0
 
         
@@ -109,6 +111,20 @@ class MainWindow(QWidget):
         # Layout for the main window
         layout = QVBoxLayout(self)
         layout.addWidget(self.stacked_widget)
+        
+        QtWidgets.QShortcut(
+            QtGui.QKeySequence(QtGui.QKeySequence.ZoomIn),
+            self._view,
+            context=QtCore.Qt.WidgetShortcut,
+            activated=self.zoom_in,
+        )
+
+        QtWidgets.QShortcut(
+            QtGui.QKeySequence(QtGui.QKeySequence.ZoomOut),
+            self._view,
+            context=QtCore.Qt.WidgetShortcut,
+            activated=self.zoom_out,
+        )
 
     def show_mainMenu_page(self):
         self.stacked_widget.setCurrentIndex(0)

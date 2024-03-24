@@ -15,6 +15,7 @@ obj_mappings = {
     'cash_register_green': (QRect(96, 116, 32, 44), (0, -16), (0, 0)),
     'counter_side_green': (QRect(102, 64, 26, 32), (3, 0), (0, 0)),
     'counter_corner_green': (QRect(32, 96, 58, 36), (0, -4), (1, 0)),
+    'shelf_white_double_side': (QRect(449, 782, 32, 96), (0, -64), (0, 1)),
 }
 
 class Tile:
