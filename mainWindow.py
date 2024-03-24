@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
                              QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout, 
-                             QGraphicsScene, QGraphicsView, QMainWindow, QMessageBox)
+                             QGraphicsScene, QGraphicsView, QMainWindow, QMessageBox, QComboBox)
 from PyQt6 import QtCore,  QtGui, QtWidgets
 from tilemapview import TileMapView
 from tilemapview import TileMapView
@@ -13,6 +13,7 @@ import sys
 #list to store products
 product_list = []
 product_node_list = []
+current_dept = None
 # Initialize the product manager
 myProductManager = ProductManager()
 myProductManager.initializeProducts()
@@ -83,6 +84,15 @@ class MainWindow(QWidget):
         user_input_Hbox.addWidget(self.user_input_line)
         user_input_Hbox.addWidget(self.add_product_btn)
 
+        #combobox for shopping by Department
+        self.shop_by_department_combobox = QComboBox()
+        self.shop_by_department_combobox.currentTextChanged.connect(self.department_selected)
+
+        #list widget display results
+        self.search_result_display = QListWidget()
+        self.search_result_display.setAlternatingRowColors(True)
+
+
         #list of input data
         self.product_list_widget = QListWidget()
         self.product_list_widget.setAlternatingRowColors(True)
@@ -99,6 +109,8 @@ class MainWindow(QWidget):
         search_product_layout = QVBoxLayout(self.search_product_page)
         search_product_layout.setSpacing(20)
         search_product_layout.addLayout(user_input_Hbox)
+        #search_product_layout.addWidget(self.shop_by_department_combobox)
+        #search_product_layout.addWidget(self.search_result_display)
         search_product_layout.addWidget(self.product_list_widget)
         search_product_layout.addWidget(self.display_tilemap_btn)
         search_product_layout.addWidget(self.main_menu_btn)
@@ -125,6 +137,10 @@ class MainWindow(QWidget):
 
     def show_addItem_page(self):
         self.stacked_widget.setCurrentIndex(1)
+
+    def department_selected(self, dept):
+        current_dept = dept
+
     
     #adding to our list & displaying to user
     def add_product_to_list(self):
@@ -149,6 +165,10 @@ class MainWindow(QWidget):
 
                     if button == QMessageBox.StandardButton.Ok:
                         print("ok")
+            #elif(current_dept is not None):
+                #product_by_dept_list = myProductManager.get_product_by_deptartment(current_dept)
+                #for product in product_by_dept_list:
+                    #self.shop_by_department_combobox.addItems(product)
             else:
                 dlg = QMessageBox(self)
                 dlg.setWindowTitle(" ")
@@ -160,6 +180,13 @@ class MainWindow(QWidget):
                 
     
     def show_tilemap_page(self):
+        
+        self.tilemap_page = QWidget()
+        tile_view_Hbox = QVBoxLayout(self.tilemap_page)
+        main_menu_btn = QPushButton('Main Menu')
+        main_menu_btn.clicked.connect(self.show_mainMenu_page)
+        tile_view_Hbox.addWidget(main_menu_btn)
+
         view = TileMapView()
         myProductManager.populateShelves(view)
 
@@ -174,7 +201,8 @@ class MainWindow(QWidget):
 
         path = pathfinder.find_path()
         view.tilemaps_widget.add_path(path)
-        self.stacked_widget.addWidget(view.tilemaps_widget)
+        tile_view_Hbox.addWidget(view.tilemaps_widget)
+        self.stacked_widget.addWidget(self.tilemap_page)
         self.stacked_widget.setCurrentIndex(2)
     
     def adjustParentSize(self, index):

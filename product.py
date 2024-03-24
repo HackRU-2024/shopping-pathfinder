@@ -22,16 +22,16 @@ class Product:
         
 class ProductManager:
     def __init__(self):
-        print("check...")
+        #print("check...")
         self.products = [] 
 
     def initializeProducts(self):
-        print("starting...")
+        #print("starting...")
 
         #get list of items
         myAPI = API()
         items = myAPI.getItemDetails()
-        print("got the API STUFF")
+        #print("got the API STUFF")
         self.products = items
         #sort list by departments
         self.products = sorted(self.products, key=lambda x: x["Department"])
@@ -85,6 +85,21 @@ class ProductManager:
             if product['Description'] == description:
                 return product
         return None
+    
+    def get_department(self):
+        department_list = []
+        for product in self.products:
+            if product['Department'] not in department_list:
+                department_list.append(product)
+        return department_list
+
+
+    def get_product_by_deptartment(self, department):
+        product_by_dept_list = []
+        for product in self.products:
+            if product['department'] == department:
+                product_by_dept_list.append(product)
+        return product_by_dept_list
     
     def remove_product(self, upc):
         for product in self.products:
