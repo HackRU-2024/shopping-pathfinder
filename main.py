@@ -17,11 +17,16 @@ if __name__ == '__main__':
     # Create the tilemap view
     view = TileMapView()
     myProductManager.populateShelves(view)
+    myProductManager
     # Pathfinding
     pathfinder = Pathfinder(view.tilemaps_widget)
-    path = pathfinder.find_path((0, 0), (19, 19))
-    path = [tuple(i) for i in path]
-    view.tilemaps_widget.set_path(path)
+    pathfinder.add_node((29, 24)) # Start
+    pathfinder.add_node(myProductManager.get_product('sesame seeds')['Location'])
+    pathfinder.add_node(myProductManager.get_product('vinegar')['Location'])
+    pathfinder.add_node(myProductManager.get_product('hot sauce')['Location'])
+    pathfinder.add_node((2, 2))
+    path = pathfinder.find_path()
+    view.tilemaps_widget.add_path(path)
 
     view.show()    
     sys.exit(app.exec())
