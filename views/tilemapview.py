@@ -7,6 +7,8 @@ def default_store_gen(tilemap: TileMap):
     for y in range(tilemap.height // 4):
         for x in range(tilemap.width // 2 - 2):
             tilemap.place_object(2 * x + 2, 1 + y * 4, 'shelf_white_double')
+            
+    tilemap.place_dec(0, 1, 'cash_register')
 
 
 class TileMapView(QWidget):

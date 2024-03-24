@@ -12,8 +12,8 @@ obj_mappings = {
     'shelf_white_single_0': (QRect(64, 592, 32, 62), (0, -30), (0, 0)),
     'shelf_white_single_1': (QRect(96, 592, 32, 62), (0, -30), (0, 0)),
     'shelf_white_double': (QRect(128, 592, 64, 64), (0, -32), (1, 0)),
+    'cash_register': (QRect(96, 276, 32, 44), (0, -12), (0, 0)),
 }
-
 
 class Tile:
     def __init__(self, tile_type: str, traversable: bool):
@@ -29,6 +29,7 @@ class TileMap(QWidget):
         self.tile_size = 32
         self.tiles = [[Tile('floor_concrete', True) for _ in range(width)] for _ in range(height)]
         self.objects = []
+        self.decorations =[]
         self.path = [(0, 0), (2, 2)]
         self.texture_atlas = QPixmap('assets/modern_tiles/interiors_free/32x32/Interiors_free_32x32.png')
 
@@ -69,7 +70,13 @@ class TileMap(QWidget):
         for object in self.objects:
             x, y, obj_type = object
             texture, offset = self.get_obj_texture_size(obj_type)
-            painter.drawPixmap(x * self.tile_size + offset[0], y * self.tile_size + offset[1], texture)
+            painter.drawPixmap(x * self.tile_size + offset[0], 
+                               y * self.tile_size + offset[1], texture)
+        for dec in self.decorations:
+            x, y, dec_type = dec
+            texture, offset = self.get_obj_texture_size(dec_type)
+            painter.drawPixmap(x * self.tile_size + offset[0], 
+                               y * self.tile_size + offset[1], texture)
 
 
     def set_path(self, path):
@@ -90,6 +97,15 @@ class TileMap(QWidget):
         self.tiles[y][x].traversable = False
         self.tiles[y][x+size[0]].traversable = False
         self.tiles[y+size[1]][x].traversable = False
+        
+        
+    def place_dec(self, x, y, dec_type):
+        self.decorations.append((x, y, dec_type))
+        size = obj_mappings[dec_type][2]
+        self.tiles[y][x].traversable = False
+        self.tiles[y][x+size[0]].traversable = False
+        self.tiles[y+size[1]][x].traversable = False
+        
         
     def add_product(self, x, y, product):
         self.tiles[y][x].products.append(product)
