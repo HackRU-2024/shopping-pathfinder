@@ -6,6 +6,21 @@ class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('QStackedWidget Demo')
+
+        self.setStyleSheet('''
+                MainWindow {
+                        background-color: #566981;
+                        
+                }
+                QPushButton {
+                        background-color: white;
+                        
+                }
+                * {
+                        font-family: 'Arial','Times New Roman';
+                }
+
+        ''')
         
         # Create a stacked widget
         self.stacked_widget = QStackedWidget()
