@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
-                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout)
+                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout, QGraphicsScene, QGraphicsView)
 from PyQt6.QtCore import Qt
 from PyQt6 import QtCore
 from tilemapview import TileMapView
