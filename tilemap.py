@@ -30,7 +30,7 @@ class TileMap(QWidget):
         self.tiles = [[Tile('floor_concrete', True) for _ in range(width)] for _ in range(height)]
         self.objects = []
         self.decorations =[]
-        self.path = [(0, 0), (2, 2)]
+        self.path = []
         self.texture_atlas = QPixmap('assets/modern_tiles/interiors_free/32x32/Interiors_free_32x32.png')
 
 
