@@ -1,4 +1,3 @@
-from tilemap import TileMap
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QStackedWidget
 from tilemap import TileMap
 
@@ -23,3 +22,4 @@ class TileMapView(QWidget):
     
     def getShelves(self):
         return self.tilemaps_widget.get_objects()
+

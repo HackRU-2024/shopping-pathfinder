@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
-                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout)
+                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout, QGraphicsScene, QGraphicsView)
 from PyQt6 import QtCore
 #from tilemap import TileMap
 #list to store products
@@ -25,6 +25,14 @@ class MainWindow(QWidget):
                 }
 
         ''')
+        
+        # Create QGraphicsScene
+        self.scene = QGraphicsScene()
+        self.scene.setSceneRect(0, 0, 500, 500)
+
+        # Create QGraphicsView
+        self.view = QGraphicsView()
+        self.view.setScene(self.scene)
         
         # Create a stacked widget
         self.stacked_widget = QStackedWidget()

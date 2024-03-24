@@ -5,7 +5,7 @@ from tilemap import TileMap
 from product import Product, ProductManager
 #from views.tilemapview import TileMapView
 from pathfinder import Pathfinder
-from views.mainWindow import MainWindow
+from mainWindow import MainWindow
 
 
 if __name__ == '__main__':
@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # Initialize the product manager
     myProductManager = ProductManager()
     myProductManager.initializeProducts()
-    
+        
     # Startup Main view
     view = MainWindow()
 
