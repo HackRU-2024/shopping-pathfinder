@@ -18,6 +18,7 @@ current_dept = None
 myProductManager = ProductManager()
 myProductManager.initializeProducts()
 
+
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
@@ -37,6 +38,7 @@ class MainWindow(QWidget):
                 }
 
         ''')
+        self.setGeometry(100, 100, 1000, 700)
         
         # Create QGraphicsScene
         self.scene = QGraphicsScene()
@@ -117,7 +119,6 @@ class MainWindow(QWidget):
         search_product_layout.setGeometry(QtCore.QRect(140, 20, 461, 491))
 
 
-
         #initalizing the tilemap view
         #self.tilemap_page = TileMap()
 
@@ -194,10 +195,13 @@ class MainWindow(QWidget):
         pathfinder = Pathfinder(view.tilemaps_widget)
         
         # making list of nodes based on product list
+        pathfinder.add_node((view.tilemaps_widget.width-1, view.tilemaps_widget.height-1)) # Store Entrance
         for product in product_list:
             description = product['Description']
             item = myProductManager.get_product(description)
             pathfinder.add_node(item['Location'])
+        pathfinder.add_node((2, 3)) # Store Cash Register
+
 
         path = pathfinder.find_path()
         view.tilemaps_widget.add_path(path)

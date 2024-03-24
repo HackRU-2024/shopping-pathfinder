@@ -2,6 +2,8 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
 from tilemap import TileMap
+import numpy as np
+from itertools import permutations
 import copy
 
 
@@ -12,7 +14,6 @@ class Pathfinder:
                        for y in range(tilemap.height)]
         self.grid = Grid(matrix=self.matrix)
         self.goals = []
-
 
     def add_node(self, goal):
         self.goals.append(self.grid.node(*goal))
@@ -25,18 +26,20 @@ class Pathfinder:
 
     def find_path(self):
         paths =[]
-        #grind = Grid(matrix=copy.deepcopy(self.matrix))
+        for j in list(permutations(self.goals, len(self.goals))):
+            paths_single = []
+            for i in range(len(j)-1):
+                finder = AStarFinder(diagonal_movement=DiagonalMovement.always)
+                path, runs = finder.find_path(j[i], j[i+1], self.grid)
+                self.grid.cleanup()
 
-        for i in range(len(self.goals)-1):
-            finder = AStarFinder(diagonal_movement=DiagonalMovement.always)
-            path, runs = finder.find_path(self.goals[i], self.goals[i+1], self.grid)
-            self.grid.cleanup()
-
-            if path is None:
-                print('No path found!')
-                return None
+                if path is None:
+                    print('No path found!')
+                    return None
+                
+                for node in path:
+                    paths_single.append(node)
+            paths.append(paths_single)
             
-            for node in path:
-                paths.append(node)
-        
-        return paths
+        # Return shortest path
+        return min(paths, key=len)
