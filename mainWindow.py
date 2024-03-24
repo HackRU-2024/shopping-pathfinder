@@ -1,10 +1,18 @@
-import sys
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
-                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout, QGraphicsScene, QGraphicsView)
+                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout)
 from PyQt6 import QtCore
+from tilemapview import TileMapView
+from product import ProductManager
+from pathfinder import Pathfinder
+import sys
+
+
 #from tilemap import TileMap
 #list to store products
 product_list = []
+# Initialize the product manager
+myProductManager = ProductManager()
+myProductManager.initializeProducts()
 
 class MainWindow(QWidget):
     def __init__(self):
@@ -25,14 +33,6 @@ class MainWindow(QWidget):
                 }
 
         ''')
-        
-        # Create QGraphicsScene
-        self.scene = QGraphicsScene()
-        self.scene.setSceneRect(0, 0, 500, 500)
-
-        # Create QGraphicsView
-        self.view = QGraphicsView()
-        self.view.setScene(self.scene)
         
         # Create a stacked widget
         self.stacked_widget = QStackedWidget()
@@ -72,7 +72,7 @@ class MainWindow(QWidget):
 
         #button to switch to tile map
         self.display_tilemap_btn = QPushButton('Map')
-        #self.display_tilemap_btn.clicked.connect(self.show_tilemap_page)
+        self.display_tilemap_btn.clicked.connect(self.show_tilemap_page)
 
         # Create buttons to switch to main menu
         self.main_menu_btn = QPushButton('Main Menu')
@@ -118,7 +118,17 @@ class MainWindow(QWidget):
             #print(self.product_list)
     
     def show_tilemap_page(self):
+        view = TileMapView()
+        myProductManager.populateShelves(view)
+        # Pathfinding
+        pathfinder = Pathfinder(view.tilemaps_widget)
+        pathfinder.add_node((0, 0))
+        pathfinder.add_node((19, 19))
+        path = pathfinder.find_path()
+        view.tilemaps_widget.add_path(path)
+        self.stacked_widget.addWidget(view.tilemaps_widget)
         self.stacked_widget.setCurrentIndex(2)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
