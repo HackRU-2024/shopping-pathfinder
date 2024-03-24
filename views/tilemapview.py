@@ -1,5 +1,6 @@
 from tilemap import TileMap
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout, QStackedWidget
+from tilemap import TileMap
 
 
 def default_store_gen(tilemap: TileMap):
@@ -15,7 +16,8 @@ class TileMapView(QWidget):
         self.tilemaps_widget = TileMap(20, 20)
         default_store_gen(self.tilemaps_widget)
 
-        # Create and add widgets to stacked widget
+        # Add widget to layout
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.tilemaps_widget)
         self.setLayout(main_layout)
+
