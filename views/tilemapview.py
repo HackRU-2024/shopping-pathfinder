@@ -8,6 +8,8 @@ def default_store_gen(tilemap: TileMap):
             tilemap.place_object(2 * x + 2, 1 + y * 4, 'shelf_white_double')
 
 
+
+
 class TileMapView(QWidget):
     def __init__(self):
         super().__init__()
@@ -19,3 +21,7 @@ class TileMapView(QWidget):
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.tilemaps_widget)
         self.setLayout(main_layout)
+    
+    def getShelves(self):
+        return self.tilemaps_widget.get_objects()
+

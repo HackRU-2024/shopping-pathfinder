@@ -33,13 +33,42 @@ class ProductManager:
         items = myAPI.getItemDetails()
         print("got the API STUFF")
         self.products = items
-
         #sort list by departments
         self.products = sorted(self.products, key=lambda x: x["Department"])
 
-
         
-    
+    def printProductsToText(self):
+        # Open a file in write mode ('w')
+        with open('output.txt', 'w') as file:
+            # Iterate over each element in the list
+            for item in self.products:
+                # Write each element followed by a newline character to the file
+                file.write(str(item) + '\n')
+
+    # Method that sets tuples for each product representing location
+    # 2 products per shelf, iterate until we run out of shelves or the list ends
+    def populateShelves(self, storeTileMap):
+        print("about to populate the shelves")
+        shelves = storeTileMap.getShelves()
+
+        shelfCapacity = 0
+        i = 0
+        for item in self.products:
+            if(shelfCapacity != 2 and i != len(shelves)):
+                item['Location'] = shelves[i][:2]
+                shelfCapacity += 1
+            elif(i == len(shelves)):
+                print("ran out of shelves...")
+                break
+            else:
+                shelfCapacity = 0
+                i += 1
+
+        self.printProductsToText()
+
+        #print(shelves)
+        #return NULL 
+
     def add_product(self, product):
         self.products.append(product)
         

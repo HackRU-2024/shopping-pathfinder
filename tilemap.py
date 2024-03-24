@@ -69,6 +69,9 @@ class TileMap(QWidget):
 
     def place_object(self, x, y, obj_type):
         self.objects.append((x, y, obj_type))
+
+    def get_objects(self):
+        return self.objects
         
         
     def add_product(self, x, y, product):

@@ -11,6 +11,7 @@ if __name__ == '__main__':
     myProductManager = ProductManager()
     myProductManager.initializeProducts()
     view = TileMapView()
+    myProductManager.populateShelves(view)
     view.show()    
     sys.exit(app.exec())
     
