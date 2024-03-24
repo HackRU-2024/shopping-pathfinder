@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
-                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout)
+                             QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout,
+                             QDialog, QMessageBox)
 from PyQt6 import QtCore
 from tilemapview import TileMapView
 from product import ProductManager
@@ -10,6 +11,7 @@ import sys
 #from tilemap import TileMap
 #list to store products
 product_list = []
+product_node_list = []
 # Initialize the product manager
 myProductManager = ProductManager()
 myProductManager.initializeProducts()
@@ -48,6 +50,7 @@ class MainWindow(QWidget):
         main_layout = QVBoxLayout(self.main_page)
         main_layout.addWidget(header)
         main_layout.addWidget(goto_additem_view_btn)
+        main_layout.setGeometry(QtCore.QRect(200, 20, 461, 491))
 
         #search product page (widget) ----------
         self.search_product_page = QWidget()
@@ -72,6 +75,7 @@ class MainWindow(QWidget):
 
         #button to switch to tile map
         self.display_tilemap_btn = QPushButton('Map')
+        self.display_tilemap_btn.setContentsMargins(10, 10, 10, 10)
         self.display_tilemap_btn.clicked.connect(self.show_tilemap_page)
 
         # Create buttons to switch to main menu
@@ -79,10 +83,13 @@ class MainWindow(QWidget):
         self.main_menu_btn.clicked.connect(self.show_mainMenu_page)
 
         search_product_layout = QVBoxLayout(self.search_product_page)
+        search_product_layout.setSpacing(20)
         search_product_layout.addLayout(user_input_Hbox)
         search_product_layout.addWidget(self.product_list_widget)
         search_product_layout.addWidget(self.display_tilemap_btn)
         search_product_layout.addWidget(self.main_menu_btn)
+        search_product_layout.setGeometry(QtCore.QRect(140, 20, 461, 491))
+
 
 
         #initalizing the tilemap view
@@ -91,7 +98,8 @@ class MainWindow(QWidget):
         # Add pages (qwidgets) to the stacked widget----------- stacking widgets
         self.stacked_widget.addWidget(self.main_page)
         self.stacked_widget.addWidget(self.search_product_page)
-        #self.stacked_widget.addWidget(self.tilemap_page)
+        # Connect signal for stacked widget's current widget change
+        self.stacked_widget.currentChanged.connect(self.adjustParentSize)
 
         # Layout for the main window
         layout = QVBoxLayout(self)
@@ -108,26 +116,56 @@ class MainWindow(QWidget):
         #get the str of product & save
         str = self.user_input_line.text()
         if str:
-            #if valid string
-            product_list.append(str)
-            #show in the list widget display
-            item = QListWidgetItem(str)
-            self.product_list_widget.addItem(item)
-            self.user_input_line.clear() #clear
-            #check
-            #print(self.product_list)
+            product = myProductManager.get_product(str.lower())
+            if  product is not None:
+                if str.lower() not in product_list:
+                    product_list.append(product)
+                    #show in the list widget display
+                    item = QListWidgetItem(product['Description'])
+                    self.product_list_widget.addItem(item)
+                    self.user_input_line.clear() #clear
+                    #check
+                    #print(product_list)
+                else:
+                    dlg = QMessageBox(self)
+                    dlg.setWindowTitle(" ")
+                    dlg.setText("Product Already Added")
+                    button = dlg.exec()
+
+                    if button == QMessageBox.StandardButton.Ok:
+                        print("ok")
+            else:
+                dlg = QMessageBox(self)
+                dlg.setWindowTitle(" ")
+                dlg.setText("Product Not Found")
+                button = dlg.exec()
+
+                if button == QMessageBox.StandardButton.Ok:
+                    print("ok")
+                
     
     def show_tilemap_page(self):
         view = TileMapView()
         myProductManager.populateShelves(view)
+
         # Pathfinding
         pathfinder = Pathfinder(view.tilemaps_widget)
-        pathfinder.add_node((0, 0))
-        pathfinder.add_node((19, 19))
+        
+        # making list of nodes based on product list
+        for product in product_list:
+            description = product['Description']
+            item = myProductManager.get_product(description)
+            pathfinder.add_node(item['Location'])
+
         path = pathfinder.find_path()
         view.tilemaps_widget.add_path(path)
         self.stacked_widget.addWidget(view.tilemaps_widget)
         self.stacked_widget.setCurrentIndex(2)
+    
+    def adjustParentSize(self, index):
+        current_widget = self.stacked_widget.widget(index)
+        if current_widget:
+            self.resize(current_widget.size())
 
 
 if __name__ == '__main__':
