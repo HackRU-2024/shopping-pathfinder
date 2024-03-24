@@ -35,6 +35,8 @@ class MainWindow(QWidget):
                 }
                 * {
                         font-family: 'Arial','Times New Roman';
+                        font-size: 20px;
+                        
                 }
 
         ''')
@@ -60,6 +62,7 @@ class MainWindow(QWidget):
         self.main_page = QWidget()
         # Add labels to each page
         header = QLabel('Main Menu')
+        header.setStyleSheet("color: white;")
         header.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         #header.setMaximumSize(QtCore.QSize(16777215, 20))
         goto_additem_view_btn = QPushButton('Search Product')
