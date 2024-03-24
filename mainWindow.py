@@ -1,7 +1,9 @@
 import sys
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
                              QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout, QGraphicsScene, QGraphicsView)
+from PyQt6.QtCore import Qt
 from PyQt6 import QtCore
+
 #from tilemap import TileMap
 #list to store products
 product_list = []
@@ -28,11 +30,14 @@ class MainWindow(QWidget):
         
         # Create QGraphicsScene
         self.scene = QGraphicsScene()
-        self.scene.setSceneRect(0, 0, 500, 500)
+        self.scene.setSceneRect(0, 0, 5000, 5000)
 
         # Create QGraphicsView
         self.view = QGraphicsView()
         self.view.setScene(self.scene)
+        self.view.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
+        self.zoom_factor = 1.0
+
         
         # Create a stacked widget
         self.stacked_widget = QStackedWidget()
@@ -119,6 +124,23 @@ class MainWindow(QWidget):
     
     def show_tilemap_page(self):
         self.stacked_widget.setCurrentIndex(2)
+        
+    def keyPressEvent(self, event):
+    # Zoom in on '+' or '=' key press
+        if event.key() == Qt.Key.Key_Plus:
+            self.zoom_in()
+        
+        # Zoom out on '-' key press
+        elif event.key() == Qt.Key.Key_Minus:
+            self.zoom_out()
+
+    def zoom_in(self):
+        self.zoom_factor *= 1.1
+        self.view.scale(1.1, 1.1)
+
+    def zoom_out(self):
+        self.zoom_factor /= 1.1
+        self.view.scale(1/1.1, 1/1.1)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
