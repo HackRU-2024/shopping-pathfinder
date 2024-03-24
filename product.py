@@ -51,31 +51,16 @@ class ProductManager:
         print("about to populate the shelves")
         shelves = storeTileMap.getShelves()
 
-        shelfCapacity = 0
-        i = 0
-        for item in self.products:
-            if(shelfCapacity != 2 and i != len(shelves)):
-                # Adding access point offset to the shelf position so item is accessed from the front
-                access_point_offset = 1
-                shelve_pos = list(shelves[i][:2])
-                shelve_pos[1] += access_point_offset
-                item['Location'] = shelve_pos
-                shelfCapacity += 1
-                if(shelfCapacity ==2):
-                    shelfCapacity = 0
-                    i+=1
-            elif(i == len(shelves)):
-                print("ran out of shelves...")
-                break
-            #else:
-                #shelfCapacity = 0
-                #i += 1
-
+        for count, product in enumerate(self.products):
+            shelf = shelves[count % len(shelves)]
+            # Adding access point offset to the shelf position so item is accessed from the front
+            access_point_offset = 1
+            shelve_pos = list(shelf[:2])
+            shelve_pos[1] += access_point_offset
+            product['Location'] = shelve_pos
         self.printProductsToText()
-
-        #print(shelves)
-        #return NULL 
-
+        
+        
     def add_product(self, product):
         self.products.append(product)
         

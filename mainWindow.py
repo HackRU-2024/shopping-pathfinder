@@ -105,7 +105,6 @@ class MainWindow(QWidget):
         search_product_layout.setGeometry(QtCore.QRect(140, 20, 461, 491))
 
 
-
         #initalizing the tilemap view
         #self.tilemap_page = TileMap()
 
