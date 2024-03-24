@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QLabel,
                              QListWidgetItem, QStackedWidget, QLineEdit, QListWidget, QHBoxLayout, 
-                             QGraphicsScene, QGraphicsView, QMainWindow)
+                             QGraphicsScene, QGraphicsView, QMainWindow, QMessageBox)
 from PyQt6 import QtCore,  QtGui, QtWidgets
 from tilemapview import TileMapView
 from tilemapview import TileMapView
@@ -17,7 +17,7 @@ product_node_list = []
 myProductManager = ProductManager()
 myProductManager.initializeProducts()
 
-class MainWindow(QWidget,):
+class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Demo')
@@ -46,7 +46,7 @@ class MainWindow(QWidget,):
         self.view.setScene(self.scene)
         self.view.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
         # self.view.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
-        self.central_widget(self.view)
+        #self.central_widget(self.view)
         self.zoom_factor = 1.0
 
         
@@ -119,19 +119,6 @@ class MainWindow(QWidget,):
         layout = QVBoxLayout(self)
         layout.addWidget(self.stacked_widget)
         
-        QtWidgets.QShortcut(
-            QtGui.QKeySequence(QtGui.QKeySequence.ZoomIn),
-            self._view,
-            context=QtCore.Qt.WidgetShortcut,
-            activated=self.zoom_in,
-        )
-
-        QtWidgets.QShortcut(
-            QtGui.QKeySequence(QtGui.QKeySequence.ZoomOut),
-            self._view,
-            context=QtCore.Qt.WidgetShortcut,
-            activated=self.zoom_out,
-        )
 
     def show_mainMenu_page(self):
         self.stacked_widget.setCurrentIndex(0)

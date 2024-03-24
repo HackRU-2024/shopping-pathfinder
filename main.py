@@ -16,7 +16,7 @@ if __name__ == '__main__':
     #myProductManager.initializeProducts()
         
     # Startup Main view
-    view = TileMapView()
+    view = MainWindow()
 
     # myProductManager.populateShelves(view)
     # # Pathfinding
