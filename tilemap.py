@@ -97,6 +97,10 @@ class TileMap(QWidget):
         self.tiles[y][x].traversable = False
         self.tiles[y][x+size[0]].traversable = False
         self.tiles[y+size[1]][x].traversable = False
+
+    def get_objects(self):
+        return self.objects
+        
         
         
     def place_dec(self, x, y, dec_type):

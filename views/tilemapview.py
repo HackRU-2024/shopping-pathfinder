@@ -11,6 +11,8 @@ def default_store_gen(tilemap: TileMap):
     tilemap.place_dec(0, 1, 'cash_register')
 
 
+
+
 class TileMapView(QWidget):
     def __init__(self):
         super().__init__()
@@ -22,4 +24,7 @@ class TileMapView(QWidget):
         main_layout = QVBoxLayout()
         main_layout.addWidget(self.tilemaps_widget)
         self.setLayout(main_layout)
+    
+    def getShelves(self):
+        return self.tilemaps_widget.get_objects()
 
