@@ -12,8 +12,8 @@ if __name__ == '__main__':
     # Create the application
     app = QApplication(sys.argv)
     # Initialize the product manager
-    myProductManager = ProductManager()
-    myProductManager.initializeProducts()
+    #myProductManager = ProductManager()
+    #myProductManager.initializeProducts()
         
     # Startup Main view
     view = MainWindow()
