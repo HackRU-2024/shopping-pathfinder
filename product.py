@@ -61,12 +61,15 @@ class ProductManager:
                 shelve_pos[1] += access_point_offset
                 item['Location'] = shelve_pos
                 shelfCapacity += 1
+                if(shelfCapacity ==2):
+                    shelfCapacity = 0
+                    i+=1
             elif(i == len(shelves)):
                 print("ran out of shelves...")
                 break
-            else:
-                shelfCapacity = 0
-                i += 1
+            #else:
+                #shelfCapacity = 0
+                #i += 1
 
         self.printProductsToText()
 
@@ -82,7 +85,6 @@ class ProductManager:
             if product['Description'] == description:
                 return product
         return None
-    
     
     def remove_product(self, upc):
         for product in self.products:
